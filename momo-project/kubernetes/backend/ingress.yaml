@@ -1,0 +1,19 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backend
+spec:
+  # В кластере может быть несколько Ingress Controllers, мы используем NGINX
+  ingressClassName: "nginx"
+  rules:
+  - host: "std-010-008.k8s.praktikum-services.tech"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 8081

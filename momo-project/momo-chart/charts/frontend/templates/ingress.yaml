@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-frontend
+  annotations:
+    ingress.alb.yc.io/subnets: {{ .Values.alb.subnets  }}
+    ingress.alb.yc.io/external-ipv4-address: {{ .Values.alb.external_ip }}
+    ingress.alb.yc.io/group-name:  {{ .Values.alb.group }}
+    ingress.alb.yc.io/security-groups: {{ .Values.alb.sg }}
+spec:
+  tls:
+    - hosts:
+        - {{ .Values.ingress.fqdn }}
+      secretName: yc-certmgr-cert-id-fpqpgj93pj855qvo3iv7
+  rules:
+  - host: {{ .Values.ingress.fqdn }}
+    http:
+      paths:
+
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Release.Name }}-frontend
+            port:
+              number: {{ .Values.ingress.port }}
+...

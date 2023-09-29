@@ -1,0 +1,12 @@
+apiVersion: v2
+dependencies:
+- name: backend
+  repository: ""
+  version: 1.0.0
+- name: frontend
+  repository: ""
+  version: 1.0.0
+description: A Helm chart for Pelmeshki
+name: momo-store
+type: application
+version: 1.0.0

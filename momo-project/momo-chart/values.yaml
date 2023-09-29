@@ -1,0 +1,67 @@
+backend:
+  deployment:
+    name:
+    replicas: 1
+  container:
+    name:
+    resources: 
+      limits:
+        memory: 1024Mi
+        cpu: 500m
+      requests:
+        memory: 512Mi
+        cpu: 100m
+  service:
+    name:
+    port: 8081
+    nodeport: 30080
+    targetport: 8081
+    type: NodePort
+    nodeport: 
+  ingress:
+    fqdn_api: api.provadm.space
+    backendport: 8081
+  image:
+    name: gitlab.praktikum-services.ru:5050/std-010-008/momo-project/momo-backend
+    tag: 1.0.0
+    pullPolicy: Always
+  alb:
+    subnets: e2lmj8kudmnc03uqbcvg
+    external_ip: 158.160.5.212
+    group: infra-alb
+    sg: enpjtv2e1t8vimaubvnj
+
+
+frontend:
+  deployment:
+    name:
+    replicas: 1
+  container:
+    name:
+    resources: 
+      limits:
+        memory: 512Mi
+        cpu: 150m
+      requests:
+        memory: 256Mi
+        cpu: 50m
+  image:
+    name: gitlab.praktikum-services.ru:5050/std-010-008/momo-project/momo-frontend
+    tag: 1.0.0
+    pullPolicy: Always
+  service:
+    name:
+    port: 8080
+    nodeport: 30081
+    targetport: 80
+    type: NodePort
+  ingress:
+    fqdn: momo.provadm.space
+    port: 8080
+    fqdn_api: api.provadm.space
+    backendport: 8081
+  alb:
+    subnets: e2lmj8kudmnc03uqbcvg
+    external_ip: 158.160.5.212
+    group: infra-alb
+    sg: enpjtv2e1t8vimaubvnj

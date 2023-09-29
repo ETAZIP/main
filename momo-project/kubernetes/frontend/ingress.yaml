@@ -1,0 +1,47 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend
+  annotations:
+    ingress.alb.yc.io/subnets: e2lmj8kudmnc03uqbcvg
+    ingress.alb.yc.io/external-ipv4-address: 158.160.5.212
+    ingress.alb.yc.io/group-name: infra-alb
+    ingress.alb.yc.io/security-groups: enpjtv2e1t8vimaubvnj
+spec:
+  rules:
+    - host: "momo.provadm.space"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: frontend
+              port:
+                number: 80
+
+        - path: /products/
+          pathType: Prefix
+          backend:
+            service:
+              name: backend
+              port:
+                number: 8081
+
+        - path: /categories/
+          pathType: Prefix
+          backend:
+            service:
+              name: backend
+              port:
+                number: 8081
+
+
+        - path: /auth/
+          pathType: Prefix
+          backend:
+            service:
+              name: backend
+              port:
+                number: 8081
